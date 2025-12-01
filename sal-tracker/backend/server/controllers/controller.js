@@ -20,7 +20,7 @@ const VIDEO_DIR =
 // Java jar location relative to repo root
 const JAR_PATH =
   process.env.JAR_PATH ||
-  path.join(__dirname, "../../java-processor/target/centroidFinderVideo-jar-with-dependencies.jar");
+  path.join(__dirname, "../../../Processor/target/centroidFinderVideo-jar-with-dependencies.jar")
 
 // return list of all videos within video directory
 const getVideos = async (req, res) => {
@@ -100,7 +100,7 @@ const startVideoProcess = async (req, res) => {
     const jobId = randomUUID();
     jobStatus[jobId] = { status: "processing" };
 
-    const videoPath = path.join("/videos", filename); // inside container we mount /videos
+    const videoPath = path.join(VIDEO_DIR, filename); // inside container we mount /videos
 
     const child = spawn(
       "java",
