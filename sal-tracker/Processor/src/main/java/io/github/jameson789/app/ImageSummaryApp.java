@@ -47,7 +47,7 @@ public class ImageSummaryApp {
         int threshold;
 
         try {
-            targetColor = Integer.parseInt(hexTargetColor, 16);
+            targetColor = Integer.parseInt(hexTargetColor, 16) & 0xFFFFFF;
             threshold = Integer.parseInt(args[2]);
         } catch (Exception e) {
             System.err.println("Error parsing color or threshold.");
@@ -86,13 +86,20 @@ public class ImageSummaryApp {
                 grabber.setFrameNumber(frameNumber);
 
                 var frame = grabber.grabImage();
-                if (frame != null) {
-                    BufferedImage image = converter.getBufferedImage(frame);
-                    CentroidResult result = processor.processImage(image);
 
-                    if (result != null) {
-                        writer.printf("%d,%d,%d%n", second, result.x(), result.y());
-                    }
+                if (frame == null) {
+                    System.out.println("No frame at second: " + second);
+                    continue;
+                }
+
+                BufferedImage image = converter.getBufferedImage(frame);
+                System.out.println("Frame loaded at second " + second + " size=" +
+                                image.getWidth() + "x" + image.getHeight());
+
+                CentroidResult result = processor.processImage(image);
+
+                if (result != null) {
+                    writer.printf("%d,%d,%d%n", second, result.x(), result.y());
                 }
             }
 

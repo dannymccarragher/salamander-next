@@ -19,22 +19,27 @@ public class ImageProcessor {
             return null;
         }
         List<Group> groups = groupFinder.findConnectedGroups(image);
-
+    
+        if (groups == null || groups.isEmpty()) {
+            System.out.println("⚠️ No white pixels found for this frame");
+            return null;
+        }
+    
         Group largestGroup = null;
         for (Group group : groups) {
             if (largestGroup == null || group.size() > largestGroup.size()) {
                 largestGroup = group;
             }
         }
-
+    
         if (largestGroup == null) {
             return null;
         }
-
+    
         int x = largestGroup.centroid().x();
         int y = largestGroup.centroid().y();
         return new CentroidResult(x, y);
-    }
+    }    
 
     public BufferedImage getBinarizedImage(BufferedImage image) {
         return binarizer.toBufferedImage(binarizer.toBinaryArray(image));

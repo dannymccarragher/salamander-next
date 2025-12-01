@@ -63,7 +63,7 @@ public class DistanceImageBinarizer implements ImageBinarizer {
                 double distance = distanceFinder.distance(rgb, targetColor);
 
                 // pixel is white if distance < threshold
-                if(distance < threshold){
+                if (distance <= threshold){
                     result[row][col] = 1;
                 } else{
                     result[row][col] = 0;
