@@ -1,0 +1,19 @@
+FROM node:20-slim
+
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk ffmpeg && \
+    apt-get clean
+
+WORKDIR /app
+
+COPY server/package*.json ./server/
+WORKDIR /app/server
+RUN npm install --only=production
+
+COPY server/. .
+
+ENV VIDEO_PATH=/videos
+ENV RESULT_PATH=/results
+EXPOSE 3000
+
+CMD ["node", "server.js"]
