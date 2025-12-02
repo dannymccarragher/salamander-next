@@ -21,7 +21,7 @@ services:
   frontend:
     build:
       context: ..
-    dockerfile: docker/Dockerfile.frontend
+      dockerfile: docker/Dockerfile.frontend
     container_name: salamander-frontend
     environment:
       - NEXT_PUBLIC_BACKEND_URL=http://143.198.63.60:3000
