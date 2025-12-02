@@ -4,16 +4,16 @@ RUN apt-get update && \
     apt-get install -y openjdk-17-jdk ffmpeg && \
     apt-get clean
 
-WORKDIR /app
-
-COPY server/package*.json ./server/
 WORKDIR /app/server
+
+COPY ../backend/server/package*.json ./
+
 RUN npm install --only=production
 
-COPY server/. .
+COPY ../backend/server/. .
 
-ENV VIDEO_PATH=/videos
-ENV RESULT_PATH=/results
+COPY ../Processor/target/centroidFinderVideo-jar-with-dependencies.jar /app/server/
+
 EXPOSE 3000
 
 CMD ["node", "server.js"]

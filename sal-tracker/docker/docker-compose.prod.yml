@@ -1,31 +1,21 @@
 version: "3.9"
 
 services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "80:3000"
+    restart: always
+
   backend:
     build:
       context: ..
       dockerfile: docker/Dockerfile.backend
-    container_name: salamander-backend
-    environment:
-      - PORT=3000
-      - VIDEO_PATH=/videos
-      - RESULT_PATH=/results
-      - JAR_PATH=/Processor/target/centroidFinderVideo-jar-with-dependencies.jar
-    volumes:
-      - /var/salamander/videos:/videos
-      - /var/salamander/results:/results
-      - /var/salamander/Processor:/Processor
     ports:
       - "3000:3000"
-
-  frontend:
-    build:
-      context: ..
-    dockerfile: docker/Dockerfile.frontend
-    container_name: salamander-frontend
-    environment:
-      - NEXT_PUBLIC_BACKEND_URL=http://143.198.63.60:3000
-    depends_on:
-      - backend
-    ports:
-      - "80:3001"
+    volumes:
+      - /videos:/app/server/videos
+      - /results:/app/server/results
+    restart: always
