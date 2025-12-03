@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../backend/videos:/app/backend/videos
+      - ../backend/results:/app/backend/results
+    depends_on:
+      - java
+
+  java:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.java
+    volumes:
+      - ../backend:/backend
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "3001:3001"
