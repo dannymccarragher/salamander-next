@@ -52,6 +52,7 @@ const withVideoProcessing = (WrappedComponent) => {
                 <WrappedComponent
                     {...props}
                     status={status}
+                    setStatus={setStatus}
                     error={error}
                     jobId={jobId}
                     start={start}

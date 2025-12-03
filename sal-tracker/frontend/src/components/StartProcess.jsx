@@ -4,7 +4,7 @@ import { Box, Button, Typography, LinearProgress } from "@mui/material";
 import CompletedJobs from "./CompletedJobs";
 import withVideoProcessing from "./withVideoProcessing";
 
-const StartProcess = ({ filename, color, threshold, status, error, jobId, start }) => {
+const StartProcess = ({ filename, color, threshold, status, setStatus, error, jobId, start }) => {
   const [completedJobs, setCompletedJobs] = useState([]);
 
   useEffect(() => {
@@ -19,18 +19,23 @@ const StartProcess = ({ filename, color, threshold, status, error, jobId, start 
         // if job is done, stop calling 
         if (data.status === "done") {
           setCompletedJobs((prev) => [...prev, { jobId, filename }]);
+          setStatus("done");
           clearInterval(interval);
+        } else if (data.status === "error") {
+          // Handle backend reporting an error
+          setStatus("idle");
+          clearInterval(interval);
+          console.error("Job failed:", data.error);
         }
-
-        // If error, stop calling and return an error
       } catch (err) {
         console.error("Failed to check job status:", err);
+        setStatus("idle"); // Reset to idle so user can retry
         clearInterval(interval);
       }
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [jobId, filename]);
+  }, [jobId, filename, setStatus]);
 
   return (
     <Box sx={{ marginTop: 6, textAlign: "center" }}>
