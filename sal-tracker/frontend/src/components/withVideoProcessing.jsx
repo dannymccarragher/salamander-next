@@ -9,6 +9,8 @@ const withVideoProcessing = (WrappedComponent) => {
         const [error, setError] = useState("");
         const [jobId, setJobId] = useState(null);
 
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
         // Start video processing
         const start = async (filename, color, threshold) => {
             setError("");
@@ -17,7 +19,7 @@ const withVideoProcessing = (WrappedComponent) => {
             try {
                 // Call backend API
                 const res = await fetch(
-                    `http://localhost:3000/process/${filename}?targetColor=${color.slice(1)}&threshold=${threshold}`,
+                    `${backendUrl}/process/${filename}?targetColor=${color.slice(1)}&threshold=${threshold}`,
                     {
                         method: "POST",
                         headers: {

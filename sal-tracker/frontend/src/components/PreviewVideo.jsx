@@ -5,6 +5,7 @@ import { Slider, Container, Box, Typography } from "@mui/material";
 import StartProcess from "./StartProcess";
 
 export default function PreviewVideo({ params }) {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   // Get filename from URL
   const { filename } = useParams();
   // States for color and threshold
@@ -15,7 +16,7 @@ export default function PreviewVideo({ params }) {
   const imgRef = useRef(null);
 
   // Thumbnail URL
-  const thumbnailUrl = `http://localhost:3000/thumbnail/${encodeURIComponent(
+  const thumbnailUrl = `${backendUrl}/thumbnail/${encodeURIComponent(
     filename
   )}`;
 
@@ -96,7 +97,7 @@ export default function PreviewVideo({ params }) {
 
         {/* Preview cards */}
         <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap", justifyContent: "center", width: "100%" }}>
-          
+
           {/* Original image */}
           <Box sx={cardStyle}>
             <Typography variant="h6" gutterBottom>
@@ -147,7 +148,7 @@ export default function PreviewVideo({ params }) {
           <Typography>Pick Target Color:</Typography>
           <input
             type="color"
-            
+
             value={color}
             onChange={(e) => setColor(e.target.value)}
             style={{
