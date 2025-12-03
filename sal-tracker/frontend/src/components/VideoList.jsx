@@ -17,7 +17,7 @@ const VideoList = () => {
   const [videos, setVideos] = useState([]);
   const [error, setError] = useState(null);
   const [uploading, setUploading] = useState(false);
-
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   useEffect(() => {
     fetchVideos();
   }, []);
@@ -25,7 +25,7 @@ const VideoList = () => {
   // Fetch list of videos from backend to display
   const fetchVideos = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/videos");
+      const res = await fetch(`${backendUrl}/api/videos`);
       if (!res.ok) throw new Error("Failed to load videos");
 
       const data = await res.json();
@@ -54,7 +54,7 @@ const VideoList = () => {
       formData.append('video', file);
 
       //post the video to the upload route on backend
-      const res = await fetch('http://localhost:3000/api/upload', {
+      const res = await fetch(`${backendUrl}/api/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -116,8 +116,8 @@ const VideoList = () => {
         )}
 
 
-        
-      {/* Map through all videos, displaying each one with styling*/}
+
+        {/* Map through all videos, displaying each one with styling*/}
         <List>
           {videos.map((video) => (
             <ListItem
@@ -127,7 +127,7 @@ const VideoList = () => {
               }}
             >
               <Link
-                href={`/preview/${encodeURIComponent(video)}`}
+                href={`${backendUrl}/preview/${encodeURIComponent(video)}`}
                 style={{
                   textDecoration: 'none',
                   color: 'black',

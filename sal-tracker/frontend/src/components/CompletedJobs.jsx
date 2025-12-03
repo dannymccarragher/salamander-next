@@ -6,6 +6,10 @@ export default function CompletedJobs({ jobs }) {
   // Don't render if no jobs
   if (!jobs.length) return null;
 
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+  console.log(backendUrl);
+
   return (
     <Box sx={{ marginTop: 6 }}>
 
@@ -25,10 +29,10 @@ export default function CompletedJobs({ jobs }) {
           >
             {/* Job info */}
             <Typography>{"Video: " + filename + "  -  Job ID: " + jobId}</Typography>
-            
+
             {/* Download link */}
             <Link
-              href={`http://localhost:3000/process/${filename.slice(0, filename.length - 4)}_${jobId}.csv`}
+              href={`${backendUrl}/process/${filename.slice(0, filename.length - 4)}_${jobId}.csv`}
               // removes file extension
               download={`${filename.replace(/\.[^/.]+$/, "")}.csv`}
               sx={{ textDecoration: "none" }}

@@ -6,14 +6,14 @@ import withVideoProcessing from "./withVideoProcessing";
 
 const StartProcess = ({ filename, color, threshold, status, setStatus, error, jobId, start }) => {
   const [completedJobs, setCompletedJobs] = useState([]);
-
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   useEffect(() => {
     if (!jobId) return;
 
     // intervally call backend to fetch progess of job
     const interval = setInterval(async () => {
       try {
-        const res = await fetch(`http://localhost:3000/process/${jobId}/status`);
+        const res = await fetch(`${backendUrl}/process/${jobId}/status`);
         const data = await res.json();
 
         // if job is done, stop calling 
@@ -21,21 +21,17 @@ const StartProcess = ({ filename, color, threshold, status, setStatus, error, jo
           setCompletedJobs((prev) => [...prev, { jobId, filename }]);
           setStatus("done");
           clearInterval(interval);
-        } else if (data.status === "error") {
-          // Handle backend reporting an error
-          setStatus("idle");
-          clearInterval(interval);
-          console.error("Job failed:", data.error);
         }
+
+        // If error, stop calling and return an error
       } catch (err) {
         console.error("Failed to check job status:", err);
-        setStatus("idle"); // Reset to idle so user can retry
         clearInterval(interval);
       }
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [jobId, filename, setStatus]);
+  }, [jobId, filename]);
 
   return (
     <Box sx={{ marginTop: 6, textAlign: "center" }}>
