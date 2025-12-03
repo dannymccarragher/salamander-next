@@ -127,7 +127,7 @@ const VideoList = () => {
               }}
             >
               <Link
-                href={`${backendUrl}/preview/${encodeURIComponent(video)}`}
+                href={`/preview/${encodeURIComponent(video)}`}
                 style={{
                   textDecoration: 'none',
                   color: 'black',
