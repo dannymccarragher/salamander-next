@@ -32,7 +32,7 @@ export default function CompletedJobs({ jobs }) {
 
             {/* Download link */}
             <Link
-              href={`${backendUrl}/process/${filename.slice(0, filename.length - 4)}_${jobId}.csv`}
+              href={`/process/${filename.slice(0, filename.length - 4)}_${jobId}.csv`}
               // removes file extension
               download={`${filename.replace(/\.[^/.]+$/, "")}.csv`}
               sx={{ textDecoration: "none" }}
