@@ -5,6 +5,9 @@ services:
       dockerfile: docker/Dockerfile.backend
     ports:
       - "3000:3000"
+    environment:
+      - JAR_PATH=/app/server/centroidFinderVideo-jar-with-dependencies.jar
+      
     volumes:
       - ../backend/server/videos:/app/server/videos
       - ../backend/server/results:/app/server/results
