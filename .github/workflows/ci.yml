@@ -1,0 +1,56 @@
+name: CI - Feature Branch
+
+on:
+  push:
+    branches:
+      - "feature/ci-cd"
+  pull_request:
+    branches:
+      - "feature/ci-cd"
+
+jobs:
+  ci-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -----------------------------------
+      # OPTIONAL: Enable when tests exist
+      # -----------------------------------
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: "20"
+
+      # Backend tests
+      # - name: Install backend dependencies
+      #   working-directory: backend/server
+      #   run: npm install
+      #
+      # - name: Run backend tests
+      #   working-directory: backend/server
+      #   run: npm test --if-present
+
+      # Frontend tests
+      # - name: Install frontend dependencies
+      #   working-directory: frontend
+      #   run: npm install
+      #
+      # - name: Run frontend tests
+      #   working-directory: frontend
+      #   run: npm test --if-present
+
+      # -----------------------------------
+      # Build Docker images (NO push)
+      # -----------------------------------
+      - name: Build backend Docker image
+        run: |
+          docker build -t salamander-backend:test \
+            -f docker/Dockerfile.backend .
+
+      - name: Build frontend Docker image
+        run: |
+          docker build -t salamander-frontend:test \
+            -f docker/Dockerfile.frontend .
