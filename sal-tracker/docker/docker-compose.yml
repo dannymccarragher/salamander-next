@@ -7,7 +7,8 @@ services:
       - "3000:3000"
     environment:
       - JAR_PATH=/app/server/centroidFinderVideo-jar-with-dependencies.jar
-      
+      - VIDEO_PATH=/app/server/videos
+      - RESULT_PATH=/app/server/results
     volumes:
       - ../backend/server/videos:/app/server/videos
       - ../backend/server/results:/app/server/results
