@@ -34,13 +34,14 @@ const VideoList = ()=>{
     const [videos, setVideos] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [uploading, setUploading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const backendUrl = ("TURBOPACK compile-time value", "http://localhost:3000");
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         fetchVideos();
     }, []);
     // Fetch list of videos from backend to display
     const fetchVideos = async ()=>{
         try {
-            const res = await fetch("http://localhost:3000/api/videos");
+            const res = await fetch(`${backendUrl}/api/videos`);
             if (!res.ok) throw new Error("Failed to load videos");
             const data = await res.json();
             setVideos(data);
@@ -63,7 +64,7 @@ const VideoList = ()=>{
             const formData = new FormData();
             formData.append('video', file);
             //post the video to the upload route on backend
-            const res = await fetch('http://localhost:3000/api/upload', {
+            const res = await fetch(`${backendUrl}/api/upload`, {
                 method: 'POST',
                 body: formData
             });

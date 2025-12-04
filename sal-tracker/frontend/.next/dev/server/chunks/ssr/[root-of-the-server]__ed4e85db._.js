@@ -183,6 +183,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$mat
 function CompletedJobs({ jobs }) {
     // Don't render if no jobs
     if (!jobs.length) return null;
+    const backendUrl = ("TURBOPACK compile-time value", "http://localhost:3000");
+    console.log(backendUrl);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Box$2f$Box$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
         sx: {
             marginTop: 6
@@ -193,7 +195,7 @@ function CompletedJobs({ jobs }) {
                 children: "Completed Jobs"
             }, void 0, false, {
                 fileName: "[project]/src/components/CompletedJobs.jsx",
-                lineNumber: 13,
+                lineNumber: 17,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$List$2f$List$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__List$3e$__["List"], {
@@ -208,11 +210,11 @@ function CompletedJobs({ jobs }) {
                                 children: "Video: " + filename + "  -  Job ID: " + jobId
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CompletedJobs.jsx",
-                                lineNumber: 27,
+                                lineNumber: 31,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Link$2f$Link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Link$3e$__["Link"], {
-                                href: `http://localhost:3000/process/${filename.slice(0, filename.length - 4)}_${jobId}.csv`,
+                                href: `${backendUrl}/process/${filename.slice(0, filename.length - 4)}_${jobId}.csv`,
                                 // removes file extension
                                 download: `${filename.replace(/\.[^/.]+$/, "")}.csv`,
                                 sx: {
@@ -224,29 +226,29 @@ function CompletedJobs({ jobs }) {
                                     children: "Download"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CompletedJobs.jsx",
-                                    lineNumber: 36,
+                                    lineNumber: 40,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CompletedJobs.jsx",
-                                lineNumber: 30,
+                                lineNumber: 34,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, jobId, true, {
                         fileName: "[project]/src/components/CompletedJobs.jsx",
-                        lineNumber: 18,
+                        lineNumber: 22,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/CompletedJobs.jsx",
-                lineNumber: 16,
+                lineNumber: 20,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/CompletedJobs.jsx",
-        lineNumber: 10,
+        lineNumber: 14,
         columnNumber: 5
     }, this);
 }
@@ -271,13 +273,14 @@ const withVideoProcessing = (WrappedComponent)=>{
         const [status, setStatus] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("idle");
         const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
         const [jobId, setJobId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+        const backendUrl = ("TURBOPACK compile-time value", "http://localhost:3000");
         // Start video processing
         const start = async (filename, color, threshold)=>{
             setError("");
             setStatus("processing");
             try {
                 // Call backend API
-                const res = await fetch(`http://localhost:3000/process/${filename}?targetColor=${color.slice(1)}&threshold=${threshold}`, {
+                const res = await fetch(`${backendUrl}/process/${filename}?targetColor=${color.slice(1)}&threshold=${threshold}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -305,18 +308,19 @@ const withVideoProcessing = (WrappedComponent)=>{
                     children: error
                 }, void 0, false, {
                     fileName: "[project]/src/components/withVideoProcessing.jsx",
-                    lineNumber: 47,
+                    lineNumber: 49,
                     columnNumber: 21
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(WrappedComponent, {
                     ...props,
                     status: status,
+                    setStatus: setStatus,
                     error: error,
                     jobId: jobId,
                     start: start
                 }, void 0, false, {
                     fileName: "[project]/src/components/withVideoProcessing.jsx",
-                    lineNumber: 52,
+                    lineNumber: 54,
                     columnNumber: 17
                 }, this)
             ]
@@ -346,14 +350,15 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$withVid
 ;
 ;
 ;
-const StartProcess = ({ filename, color, threshold, status, error, jobId, start })=>{
+const StartProcess = ({ filename, color, threshold, status, setStatus, error, jobId, start })=>{
     const [completedJobs, setCompletedJobs] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    const backendUrl = ("TURBOPACK compile-time value", "http://localhost:3000");
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!jobId) return;
         // intervally call backend to fetch progess of job
         const interval = setInterval(async ()=>{
             try {
-                const res = await fetch(`http://localhost:3000/process/${jobId}/status`);
+                const res = await fetch(`${backendUrl}/process/${jobId}/status`);
                 const data = await res.json();
                 // if job is done, stop calling 
                 if (data.status === "done") {
@@ -364,6 +369,7 @@ const StartProcess = ({ filename, color, threshold, status, error, jobId, start 
                                 filename
                             }
                         ]);
+                    setStatus("done");
                     clearInterval(interval);
                 }
             // If error, stop calling and return an error
@@ -394,7 +400,7 @@ const StartProcess = ({ filename, color, threshold, status, error, jobId, start 
                 children: status === "processing" ? "Processing..." : "Start Process"
             }, void 0, false, {
                 fileName: "[project]/src/components/StartProcess.jsx",
-                lineNumber: 38,
+                lineNumber: 39,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             status === "processing" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Box$2f$Box$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
@@ -404,12 +410,12 @@ const StartProcess = ({ filename, color, threshold, status, error, jobId, start 
                 },
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$LinearProgress$2f$LinearProgress$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__LinearProgress$3e$__["LinearProgress"], {}, void 0, false, {
                     fileName: "[project]/src/components/StartProcess.jsx",
-                    lineNumber: 50,
+                    lineNumber: 51,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/StartProcess.jsx",
-                lineNumber: 49,
+                lineNumber: 50,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)),
             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Typography$2f$Typography$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Typography$3e$__["Typography"], {
@@ -420,7 +426,7 @@ const StartProcess = ({ filename, color, threshold, status, error, jobId, start 
                 children: error
             }, void 0, false, {
                 fileName: "[project]/src/components/StartProcess.jsx",
-                lineNumber: 57,
+                lineNumber: 58,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)),
             status === "done" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Box$2f$Box$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
@@ -431,25 +437,25 @@ const StartProcess = ({ filename, color, threshold, status, error, jobId, start 
                     children: "✅ Process complete!"
                 }, void 0, false, {
                     fileName: "[project]/src/components/StartProcess.jsx",
-                    lineNumber: 62,
+                    lineNumber: 63,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/StartProcess.jsx",
-                lineNumber: 61,
+                lineNumber: 62,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$CompletedJobs$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 jobs: completedJobs
             }, void 0, false, {
                 fileName: "[project]/src/components/StartProcess.jsx",
-                lineNumber: 67,
+                lineNumber: 68,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/StartProcess.jsx",
-        lineNumber: 36,
+        lineNumber: 37,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -477,6 +483,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$StartPr
 ;
 ;
 function PreviewVideo({ params }) {
+    const backendUrl = ("TURBOPACK compile-time value", "http://localhost:3000");
     // Get filename from URL
     const { filename } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useParams"])();
     // States for color and threshold
@@ -486,7 +493,7 @@ function PreviewVideo({ params }) {
     const canvasRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const imgRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     // Thumbnail URL
-    const thumbnailUrl = `http://localhost:3000/thumbnail/${encodeURIComponent(filename)}`;
+    const thumbnailUrl = `${backendUrl}/thumbnail/${encodeURIComponent(filename)}`;
     // Load thumbnail image
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const img = new Image();
@@ -579,7 +586,7 @@ function PreviewVideo({ params }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/PreviewVideo.jsx",
-                        lineNumber: 93,
+                        lineNumber: 94,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Box$2f$Box$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
@@ -600,7 +607,7 @@ function PreviewVideo({ params }) {
                                         children: "Original"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/PreviewVideo.jsx",
-                                        lineNumber: 102,
+                                        lineNumber: 103,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
@@ -613,13 +620,13 @@ function PreviewVideo({ params }) {
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/PreviewVideo.jsx",
-                                        lineNumber: 105,
+                                        lineNumber: 106,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/PreviewVideo.jsx",
-                                lineNumber: 101,
+                                lineNumber: 102,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Box$2f$Box$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
@@ -631,7 +638,7 @@ function PreviewVideo({ params }) {
                                         children: "Binarized"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/PreviewVideo.jsx",
-                                        lineNumber: 118,
+                                        lineNumber: 119,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("canvas", {
@@ -643,19 +650,19 @@ function PreviewVideo({ params }) {
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/PreviewVideo.jsx",
-                                        lineNumber: 121,
+                                        lineNumber: 122,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/PreviewVideo.jsx",
-                                lineNumber: 117,
+                                lineNumber: 118,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/PreviewVideo.jsx",
-                        lineNumber: 98,
+                        lineNumber: 99,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Box$2f$Box$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Box$3e$__["Box"], {
@@ -675,7 +682,7 @@ function PreviewVideo({ params }) {
                                 children: "Pick Target Color:"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/PreviewVideo.jsx",
-                                lineNumber: 147,
+                                lineNumber: 148,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -691,7 +698,7 @@ function PreviewVideo({ params }) {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/src/components/PreviewVideo.jsx",
-                                lineNumber: 148,
+                                lineNumber: 149,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Typography$2f$Typography$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Typography$3e$__["Typography"], {
@@ -701,7 +708,7 @@ function PreviewVideo({ params }) {
                                 children: "Threshold:"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/PreviewVideo.jsx",
-                                lineNumber: 162,
+                                lineNumber: 163,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$mui$2f$material$2f$esm$2f$Slider$2f$Slider$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Slider$3e$__["Slider"], {
@@ -714,19 +721,19 @@ function PreviewVideo({ params }) {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/src/components/PreviewVideo.jsx",
-                                lineNumber: 163,
+                                lineNumber: 164,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/PreviewVideo.jsx",
-                        lineNumber: 133,
+                        lineNumber: 134,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/PreviewVideo.jsx",
-                lineNumber: 91,
+                lineNumber: 92,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$StartProcess$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -735,13 +742,13 @@ function PreviewVideo({ params }) {
                 threshold: threshold
             }, void 0, false, {
                 fileName: "[project]/src/components/PreviewVideo.jsx",
-                lineNumber: 174,
+                lineNumber: 175,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/PreviewVideo.jsx",
-        lineNumber: 90,
+        lineNumber: 91,
         columnNumber: 5
     }, this);
 }

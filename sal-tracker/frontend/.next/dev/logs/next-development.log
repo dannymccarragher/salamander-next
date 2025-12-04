@@ -1,14 +1,17 @@
-[00:00:00.923] Server  LOG      ✓ Ready in 564ms
-[00:00:08.493] Server  LOG      ○ Compiling / ...
-[00:00:09.258] Server  WARN    MUI Grid: The `item` prop has been removed and is no longer necessary. You can safely remove it.
+[00:00:03.444] Server  LOG      ✓ Ready in 3.1s
+[00:00:08.691] Server  WARN    MUI Grid: The `item` prop has been removed and is no longer necessary. You can safely remove it.
 
-[00:00:09.259] Server  WARN    MUI Grid: The `xs` prop has been removed. See https://mui.com/material-ui/migration/upgrade-to-grid-v2/ for migration instructions.
+[00:00:08.691] Server  WARN    MUI Grid: The `xs` prop has been removed. See https://mui.com/material-ui/migration/upgrade-to-grid-v2/ for migration instructions.
 
-[00:00:09.259] Server  WARN    MUI Grid: The `md` prop has been removed. See https://mui.com/material-ui/migration/upgrade-to-grid-v2/ for migration instructions.
+[00:00:08.692] Server  WARN    MUI Grid: The `md` prop has been removed. See https://mui.com/material-ui/migration/upgrade-to-grid-v2/ for migration instructions.
 
-[00:00:10.159] Browser WARN    MUI Grid: The `item` prop has been removed and is no longer necessary. You can safely remove it.
+[00:00:09.588] Browser WARN    MUI Grid: The `item` prop has been removed and is no longer necessary. You can safely remove it.
 
-[00:00:10.159] Browser WARN    MUI Grid: The `xs` prop has been removed. See https://mui.com/material-ui/migration/upgrade-to-grid-v2/ for migration instructions.
+[00:00:09.589] Browser WARN    MUI Grid: The `xs` prop has been removed. See https://mui.com/material-ui/migration/upgrade-to-grid-v2/ for migration instructions.
 
-[00:00:10.159] Browser WARN    MUI Grid: The `md` prop has been removed. See https://mui.com/material-ui/migration/upgrade-to-grid-v2/ for migration instructions.
+[00:00:09.589] Browser WARN    MUI Grid: The `md` prop has been removed. See https://mui.com/material-ui/migration/upgrade-to-grid-v2/ for migration instructions.
 
+[00:03:59.759] Browser LOG     http://localhost:3000
+[00:03:59.759] Browser LOG     [2;38;2;124;124;124m%s[0m http://localhost:3000
+[00:04:27.369] Browser LOG     http://localhost:3000
+[00:04:27.369] Browser LOG     [2;38;2;124;124;124m%s[0m http://localhost:3000
