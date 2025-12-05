@@ -22,8 +22,5 @@
   },
   "devDependencies": {
     "cypress": "^15.7.1"
-  },
-  "video": false,
-  "screenshotOnRunFailure": true,
-  "baseUrl": "http://localhost:3001"
+  }
 }
