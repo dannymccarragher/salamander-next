@@ -16,18 +16,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # -----------------------------------
-      # 🔧 REQUIRED: Enable Docker in GitHub Actions
-      # -----------------------------------
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install frontend dependencies
+        working-directory: sal-tracker/frontend
+        run: npm install
+
+      - name: Start Next.js server
+        working-directory: sal-tracker/frontend
+        run: npm run dev &
+      
+      - name: Wait for Next.js to be ready
+        run: npx wait-on http://localhost:3001
+
+      - name: Run Cypress tests
+        working-directory: sal-tracker/frontend
+        run: npm test
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Set up QEMU (optional)
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
-      # -----------------------------------
-      # Build Docker images (NO push)
-      # -----------------------------------
       - name: Build backend Docker image
         run: |
           docker build -t salamander-backend:test \
