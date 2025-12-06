@@ -44,7 +44,6 @@ build/
 .env.production.local
 
 # Project-specific
-*.mp4
 *.csv
 backend/videos/**
 backend/results/**
