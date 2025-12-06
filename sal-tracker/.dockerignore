@@ -1,0 +1,38 @@
+# Dependencies
+**/node_modules
+**/.npm
+
+# Build outputs
+**/dist
+**/.next
+**/build
+**/target
+
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.swp
+
+# Test artifacts
+**/cypress/videos
+**/cypress/screenshots
+**/.nyc_output
+**/coverage
+
+# Logs
+**/*.log
+**/npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+
+# Large test files (keep only what's needed)
+**/results
