@@ -5,45 +5,44 @@ on:
       - ci-cd
 
 jobs:
-deploy:
-  runs-on: ubuntu-latest
-  if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
-  steps:
-    - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-    - name: Deploy to VM
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.VM_HOST }}
-        username: ${{ secrets.VM_USER }}
-        password: ${{ secrets.VM_PASSWORD }}
+      - name: Deploy to VM
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          password: ${{ secrets.VM_PASSWORD }}
+          script: |
+            # Ensure project directory exists
+            cd ${{ secrets.VM_REPO_PATH }} || mkdir -p ${{ secrets.VM_REPO_PATH }} && cd ${{ secrets.VM_REPO_PATH }}
 
-        script: |
-          # Ensure project directory exists
-          cd ${{ secrets.VM_REPO_PATH }} || mkdir -p ${{ secrets.VM_REPO_PATH }} && cd ${{ secrets.VM_REPO_PATH }}
+            # Clone or pull repository
+            if [ -d ".git" ]; then
+              echo "Pulling latest changes..."
+              git pull origin main
+            else
+              echo "Cloning repo"
+              git clone https://github.com/${{ github.repository }}.git
+            fi
 
-          # Clone or pull repository
-          if [ -d ".git" ]; then
-            echo "Pulling latest changes..."
-            git pull origin main
-          else
-            echo "Cloning repo"
-            git clone https://github.com/${{ github.repository }}.git
-          fi
+            # Stop existing containers
+            echo "Stopping existing containers..."
+            docker compose down
 
-          # Stop existing containers
-          echo "Stopping existing containers..."
-          docker compose down
+            # Rebuild and start containers
+            echo "Rebuilding Docker containers..."
+            docker compose up -d --build
 
-          # Rebuild and start containers
-          echo "Rebuilding Docker containers..."
-          docker compose up -d --build
+            # Verify services are running
+            echo "Verifying deployment..."
+            docker compose ps
 
-          # Verify services are running
-          echo "Verifying deployment..."
-          docker compose ps
-
-          # Cleanup unused images
-          echo "Cleaning up old Docker images..."
-          docker image prune -f
+            # Cleanup unused images
+            echo "Cleaning up old Docker images..."
+            docker image prune -f
