@@ -1,0 +1,43 @@
+name: CD - Deploy to VM
+
+on:
+  push:
+    branches:
+      - main   
+
+jobs:
+  deploy:
+    name: Deploy to Team VM
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ------------------------------------------------------
+      # Setup SSH to authenticate with your VM
+      # ------------------------------------------------------
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VM_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
+
+      # ------------------------------------------------------
+      # DEPLOY TO VM
+      # ------------------------------------------------------
+      - name: Deploy using SSH
+        run: |
+          ssh ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} "
+            cd ${{ secrets.VM_REPO_PATH }} &&
+            echo 'Pulling latest code...' &&
+            git pull &&
+
+            echo 'Rebuilding Docker containers...' &&
+            docker compose down &&
+            docker compose up --build -d &&
+
+            echo 'Deployment complete!'
+          "
