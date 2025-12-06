@@ -31,13 +31,6 @@ jobs:
         run: npm ci
 
       # -----------------------------------
-      # Build Java Processor JAR
-      # -----------------------------------
-      - name: Build Processor JAR
-        working-directory: sal-tracker/Processor
-        run: mvn clean package
-
-      # -----------------------------------
       # Setup Docker
       # -----------------------------------
       - name: Set up Docker Buildx
