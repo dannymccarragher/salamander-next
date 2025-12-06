@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - "feature/ci-cd"
+      - "ci-cd"
   pull_request:
     branches:
       - "feature/ci-cd"
+      - "main"
 
 jobs:
   ci-checks:
