@@ -31,38 +31,11 @@ jobs:
         run: npm ci
 
       # -----------------------------------
-      # Setup Docker
+      # Build and Start Docker Containers
       # -----------------------------------
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      # -----------------------------------
-      # Build Backend Docker Image
-      # -----------------------------------
-      - name: Build backend Docker image
-        run: |
-          docker build -t salamander-backend:test \
-            -f sal-tracker/docker/Dockerfile.backend \
-            sal-tracker
-
-      # -----------------------------------
-      # Build Frontend Docker Image
-      # -----------------------------------
-      - name: Build frontend Docker image
-        run: |
-          docker build -t salamander-frontend:test \
-            -f sal-tracker/docker/Dockerfile.frontend \
-            sal-tracker
-
-      # -----------------------------------
-      # Run Docker Containers for Testing
-      # -----------------------------------
-      - name: Start Docker containers
+      - name: Build and start Docker containers
         working-directory: sal-tracker/docker
-        run: docker compose up -d
+        run: docker compose up -d --build
 
       - name: Wait for services to be ready
         run: |
