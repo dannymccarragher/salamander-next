@@ -10,6 +10,8 @@ COPY frontend/. .
 
 RUN npm run build
 
+RUN npm cache clean --force
+
 EXPOSE 3001
 
 CMD ["npx", "next", "start", "-p", "3001"]
