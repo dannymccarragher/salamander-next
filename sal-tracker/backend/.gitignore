@@ -25,9 +25,6 @@ node_modules
 hs_err_pid*
 replay_pid*
 
-# Allow test videos
-!sal-tracker/backend/server/videos/*.mp4
-
 /server/frame_centroids.csv
 node_modules
 .DS_Store
