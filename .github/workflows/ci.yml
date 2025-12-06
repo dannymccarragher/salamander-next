@@ -45,13 +45,6 @@ jobs:
         run: npx wait-on http://localhost:3001
 
       # -----------------------------------
-      # Run Cypress Tests
-      # -----------------------------------
-      - name: Run Cypress tests
-        working-directory: sal-tracker/frontend
-        run: npm test
-
-      # -----------------------------------
       # Setup Docker
       # -----------------------------------
       - name: Set up Docker Buildx
@@ -77,3 +70,10 @@ jobs:
           docker build -t salamander-frontend:test \
             -f sal-tracker/docker/Dockerfile.frontend \
             sal-tracker
+
+      # -----------------------------------
+      # Run Cypress Tests
+      # -----------------------------------
+      - name: Run Cypress tests
+        working-directory: sal-tracker/frontend
+        run: npm test
