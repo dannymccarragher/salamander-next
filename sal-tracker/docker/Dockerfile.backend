@@ -1,3 +1,10 @@
+# Multi-stage build for backend
+
+FROM maven:3.9.3-eclipse-temurin-17 AS java-builder
+WORKDIR /app/Processor
+COPY Processor/ .
+RUN mvn clean package
+
 FROM node:20-slim
 
 RUN apt-get update && \
@@ -14,7 +21,7 @@ COPY backend/server/. .
 
 COPY backend/server/videos ./videos
 
-COPY Processor/target/centroidFinderVideo-jar-with-dependencies.jar /app/server/
+COPY --from=java-builder /app/Processor/target/centroidFinderVideo-jar-with-dependencies.jar ./
 
 EXPOSE 3000
 
