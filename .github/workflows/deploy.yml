@@ -1,32 +1,49 @@
-name: CD - Deploy to VM
-
 on:
   push:
     branches:
-      - main   
+      - main
+      - ci-cd
 
 jobs:
-  deploy:
-    name: Deploy to Team VM
-    runs-on: ubuntu-latest
+deploy:
+  runs-on: ubuntu-latest
+  if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  steps:
+    - uses: actions/checkout@v3
 
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.VM_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
+    - name: Deploy to VM
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ${{ secrets.VM_USER }}
+        password: ${{ secrets.VM_PASSWORD }}
 
-      - name: Deploy using SSH
-        run: |
-          ssh root@${{ secrets.VM_HOST }} "
-            cd ${{ secrets.VM_REPO_PATH }} &&
-            git reset --hard &&
-            git pull &&
-            docker compose down &&
-            docker compose up --build -d
-          "
+        script: |
+          # Ensure project directory exists
+          cd ${{ secrets.VM_REPO_PATH }} || mkdir -p ${{ secrets.VM_REPO_PATH }} && cd ${{ secrets.VM_REPO_PATH }}
+
+          # Clone or pull repository
+          if [ -d ".git" ]; then
+            echo "Pulling latest changes..."
+            git pull origin main
+          else
+            echo "Cloning repo"
+            git clone https://github.com/${{ github.repository }}.git
+          fi
+
+          # Stop existing containers
+          echo "Stopping existing containers..."
+          docker compose down
+
+          # Rebuild and start containers
+          echo "Rebuilding Docker containers..."
+          docker compose up -d --build
+
+          # Verify services are running
+          echo "Verifying deployment..."
+          docker compose ps
+
+          # Cleanup unused images
+          echo "Cleaning up old Docker images..."
+          docker image prune -f
