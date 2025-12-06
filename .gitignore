@@ -44,10 +44,9 @@ build/
 .env.production.local
 
 # Project-specific
-*.mp4
+
 *.csv
-backend/videos/**
-backend/results/**
+
 server/frame_centroids.csv
 
 .idea/

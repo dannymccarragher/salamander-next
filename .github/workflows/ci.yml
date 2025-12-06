@@ -16,21 +16,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # -----------------------------------
-      # Node + Install
-      # -----------------------------------
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
+      # --------------------------
+      # BACKEND START
+      # --------------------------
+      - name: Install backend dependencies
+        working-directory: sal-tracker/backend/server
+        run: npm ci
+
+      - name: Start backend server
+        working-directory: sal-tracker/backend/server
+        run: npm start &
+
+      - name: Wait for backend
+        run: npx wait-on http://localhost:3000/api/videos
+
+      # --------------------------
+      # FRONTEND START
+      # --------------------------
       - name: Install frontend dependencies
         working-directory: sal-tracker/frontend
         run: npm ci
 
-      # -----------------------------------
-      # Build & Start Next.js in Production
-      # -----------------------------------
       - name: Build Next.js
         working-directory: sal-tracker/frontend
         run: npm run build
@@ -39,37 +50,31 @@ jobs:
         working-directory: sal-tracker/frontend
         run: npm start &
 
-      - name: Wait for Next.js to be ready
+      - name: Wait for frontend
         run: npx wait-on http://localhost:3001
 
-      # -----------------------------------
-      # Run Cypress Tests
-      # -----------------------------------
+      # --------------------------
+      # CYPRESS TESTS
+      # --------------------------
       - name: Run Cypress tests
         working-directory: sal-tracker/frontend
         run: npm test
 
-      # -----------------------------------
-      # Setup Docker
-      # -----------------------------------
+      # --------------------------
+      # DOCKER BUILDS
+      # --------------------------
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
-      # -----------------------------------
-      # Build Backend Docker Image
-      # -----------------------------------
       - name: Build backend Docker image
         run: |
           docker build -t salamander-backend:test \
             -f sal-tracker/docker/Dockerfile.backend \
             sal-tracker
 
-      # -----------------------------------
-      # Build Frontend Docker Image
-      # -----------------------------------
       - name: Build frontend Docker image
         run: |
           docker build -t salamander-frontend:test \
