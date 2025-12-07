@@ -18,17 +18,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # # -----------------------------------
-      # # Node + Install
-      # # -----------------------------------
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: "20"
+      # Node + Install
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
 
-      # - name: Install frontend dependencies
-      #   working-directory: sal-tracker/frontend
-      #   run: npm ci
+      - name: Install frontend dependencies
+        working-directory: sal-tracker/frontend
+        run: npm ci
 
       # Build and Start Docker Containers
       - name: Build and start Docker containers
