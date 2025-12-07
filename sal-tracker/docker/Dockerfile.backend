@@ -19,8 +19,6 @@ RUN npm install --only=production
 
 COPY backend/server/. .
 
-COPY backend/server/videos ./videos
-
 COPY --from=java-builder /app/Processor/target/centroidFinderVideo-jar-with-dependencies.jar ./
 
 EXPOSE 3000
