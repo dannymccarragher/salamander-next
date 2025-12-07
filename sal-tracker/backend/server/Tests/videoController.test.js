@@ -21,10 +21,10 @@ describe('getVideos', () => {
     status: jest.fn().mockReturnThis(),
   };
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-    process.env.VIDEO_PATH = 'mock/path';
-  });
+    beforeEach(() => {
+        jest.clearAllMocks();
+        process.env.VIDEO_PATH = 'mock/path';
+    });
 
     it('should return list of video files', async () => {
         mockReaddir.mockResolvedValue(['video1.mp4', 'video2.mp4']);
