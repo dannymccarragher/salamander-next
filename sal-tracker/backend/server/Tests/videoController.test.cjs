@@ -1,5 +1,5 @@
-import handlers from '../controllers/controller.js';
-import fs from 'fs/promises';
+const handlers = require('../controllers/controller.js');
+const fs = require('fs/promises');
 
 jest.mock('fs/promises');
 
@@ -33,6 +33,6 @@ describe('getVideos', () => {
     expect(mockRes.json).toHaveBeenCalledWith({
       error: 'Failed to read video directory',
     });
-    
+
   });
 });
