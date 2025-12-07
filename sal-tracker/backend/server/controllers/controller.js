@@ -1,4 +1,4 @@
-import fs from "fs/promises";
+import * as fs from "fs/promises"; 
 import path from "path";
 import ffmpeg from "fluent-ffmpeg";
 import { spawn } from "child_process";
