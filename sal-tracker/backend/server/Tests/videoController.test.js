@@ -11,9 +11,6 @@ jest.unstable_mockModule('fs/promises', () => ({
     access: jest.fn(),
 }));
 
-// Dynamic imports after mocking
-const { default: handlers } = await import('../controllers/controller.js');
-
 describe('getVideos', () => {
   const mockReq = {};
   const mockRes = {
@@ -21,10 +18,12 @@ describe('getVideos', () => {
     status: jest.fn().mockReturnThis(),
   };
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        jest.resetModules();
         jest.clearAllMocks();
-        process.env.VIDEO_PATH = 'mock/path';
-    });
+        process.env.VIDEO_PATH = "mock/path";
+        handlers = (await import("../controllers/controller.js")).default;
+      });
 
     it('should return list of video files', async () => {
         mockReaddir.mockResolvedValue(['video1.mp4', 'video2.mp4']);
