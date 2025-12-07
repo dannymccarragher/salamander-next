@@ -17,24 +17,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          lfs: true
 
-      # -----------------------------------
-      # Node + Install
-      # -----------------------------------
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+      # # -----------------------------------
+      # # Node + Install
+      # # -----------------------------------
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: "20"
 
-      - name: Install frontend dependencies
-        working-directory: sal-tracker/frontend
-        run: npm ci
+      # - name: Install frontend dependencies
+      #   working-directory: sal-tracker/frontend
+      #   run: npm ci
 
-      # -----------------------------------
       # Build and Start Docker Containers
-      # -----------------------------------
       - name: Build and start Docker containers
         working-directory: sal-tracker/docker
         run: docker compose up -d --build
@@ -46,12 +42,14 @@ jobs:
           echo "Waiting for frontend to be ready..."
           timeout 60 sh -c 'until curl -s http://localhost:3001; do sleep 2; done'
 
-      # -----------------------------------
       # Run Cypress Tests
-      # -----------------------------------
       - name: Run Cypress tests
         working-directory: sal-tracker/frontend
         run: npm test
+
+      - name: Run Backend Tests
+        working-directory: sal-tracker/backend
+        run: npm run test
 
       - name: Stop Docker containers
         if: always()
