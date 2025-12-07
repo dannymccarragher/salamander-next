@@ -1,7 +1,13 @@
-import handlers from '../controllers/controller.js';
-import fs from 'fs/promises';
+import { jest } from '@jest/globals';
 
-jest.mock('fs/promises');
+// Mock fs/promises BEFORE importing the controller
+jest.unstable_mockModule('fs/promises', () => ({
+    readdir: jest.fn(),
+}));
+
+// Dynamic imports after mocking
+const fs = await import('fs/promises');
+const { default: handlers } = await import('../controllers/controller.js');
 
 describe('getVideos', () => {
   const mockReq = {};
