@@ -28,6 +28,10 @@ jobs:
         working-directory: sal-tracker/frontend
         run: npm ci
 
+      - name: Install backend dependencies
+        working-directory: sal-tracker/backend/server
+        run: npm ci
+
       # Build and Start Docker Containers
       - name: Build and start Docker containers
         working-directory: sal-tracker/docker
@@ -46,7 +50,7 @@ jobs:
         run: npm test
 
       - name: Run Backend Tests
-        working-directory: sal-tracker/backend
+        working-directory: sal-tracker/backend/server
         run: npm run test
 
       - name: Stop Docker containers
