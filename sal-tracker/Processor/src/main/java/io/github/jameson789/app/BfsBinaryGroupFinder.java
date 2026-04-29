@@ -1,7 +1,9 @@
 package io.github.jameson789.app;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 public class DfsBinaryGroupFinder implements BinaryGroupFinder {
@@ -52,7 +54,7 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
             for(int col = 0; col < image[0].length; col++){
                 if(image[row][col] == 1){
                     List<int[]> coordinate  = new ArrayList<>();
-                    findConnectedGroupsDFS(image, row, col, coordinate);
+                    findConnectedGroupsBFS(image, row, col, coordinate);
 
                     // get size of group and x / y sum for calculating centroid
                     int size = coordinate.size();
@@ -80,29 +82,31 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         return coordinates;
     }
 
-    public void findConnectedGroupsDFS(int[][] image, int row, int col, List<int[]> coordinates) {
+    public void findConnectedGroupsBFS(int[][] image, int startRow, int startCol, List<int[]> coordinates) {
+        int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
-        // base case for edge of image and if pixel is not a 1
-        if (row < 0 || row >= image.length || col < 0 || image[row] == null || col >= image[row].length || image[row][col] != 1) {
-            return;
+        Deque<int[]> queue = new ArrayDeque<>();
+        queue.add(new int[]{startRow, startCol});
+        image[startRow][startCol] = 0;
+
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int row = current[0];
+            int col = current[1];
+            coordinates.add(new int[]{row, col});
+
+            for (int[] direction : directions) {
+                int nextRow = row + direction[0];
+                int nextCol = col + direction[1];
+
+                if (nextRow >= 0 && nextRow < image.length
+                        && nextCol >= 0 && nextCol < image[nextRow].length
+                        && image[nextRow][nextCol] == 1) {
+                    image[nextRow][nextCol] = 0;
+                    queue.add(new int[]{nextRow, nextCol});
+                }
+            }
         }
-
-        coordinates.add(new int[]{row, col});
-
-        // set the current location as a 0 to mark as visited
-        image[row][col] = 0;
-
-        int[][] directions = {
-                {1, 0},
-                {-1, 0},
-                {0, 1},
-                {0, -1}
-        };
-
-        for (int[] direction : directions) {
-            findConnectedGroupsDFS(image, row + direction[0], col + direction[1], coordinates);
-        }
-
     }
 
 }
